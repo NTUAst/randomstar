@@ -17,7 +17,7 @@
             padding: 10px 20px;
             margin: 20px 5px;
         }
-        #result {
+        #result, #currentDraw {
             margin-top: 20px;
         }
         table {
@@ -43,40 +43,12 @@
     </div>
     <button onclick="drawStars()">Draw Stars</button>
     <button onclick="clearAllData()">Clear All Data</button>
+    <div id="currentDraw"></div>
     <div id="result"></div>
 
     <script>
-        const allStars = [
-            {name: "天狼星", magnitude: -1.46, constellation: "大犬座"},
-            {name: "弧矢七", magnitude: 1.5, constellation: "大犬座"},
-            {name: "弧矢一", magnitude: 1.82, constellation: "大犬座"},
-            {name: "軍市一", magnitude: 1.99, constellation: "大犬座"},
-            {name: "弧矢二", magnitude: 2.45, constellation: "大犬座"},
-            {name: "老人星", magnitude: -0.74, constellation: "船底座"},
-            {name: "南船五", magnitude: 1.69, constellation: "船底座"},
-            {name: "海石一", magnitude: 1.86, constellation: "船底座"},
-            {name: "海石二", magnitude: 2.21, constellation: "船底座"},
-            {name: "南船三", magnitude: 2.76, constellation: "船底座"},
-            {name: "南門二", magnitude: -0.27, constellation: "半人馬座"},
-            {name: "馬腹一", magnitude: 0.61, constellation: "半人馬座"},
-            {name: "庫樓三", magnitude: 2.06, constellation: "半人馬座"},
-            {name: "庫樓七", magnitude: 2.17, constellation: "半人馬座"},
-            {name: "南門一", magnitude: 2.3, constellation: "半人馬座"},
-            {name: "大角星", magnitude: -0.05, constellation: "牧夫座"},
-            {name: "梗河一", magnitude: 2.37, constellation: "牧夫座"},
-            {name: "右攝提一", magnitude: 2.68, constellation: "牧夫座"},
-            {name: "織女一", magnitude: 0.03, constellation: "天琴座"},
-            {name: "五車二", magnitude: 0.08, constellation: "御夫座"},
-            {name: "五車五", magnitude: 1.65, constellation: "御夫座"},
-            {name: "參宿七", magnitude: 0.13, constellation: "獵戶座"},
-            {name: "參宿四", magnitude: 0.42, constellation: "獵戶座"},
-            {name: "參宿五", magnitude: 1.64, constellation: "獵戶座"},
-            {name: "南河三", magnitude: 0.34, constellation: "小犬座"},
-            {name: "南河二", magnitude: 2.89, constellation: "小犬座"},
-            {name: "水尾一", magnitude: 0.46, constellation: "波江座"},
-            {name: "玉井三", magnitude: 2.8, constellation: "波江座"},
-            {name: "天園六", magnitude: 2.88, constellation: "波江座"}
-        ];
+        const allStars = 
+           [{'name': '天狼星', 'magnitude': -1.46, 'constellation': '大犬座'}, {'name': '弧矢七', 'magnitude': 1.5, 'constellation': '大犬座'}, {'name': '弧矢一', 'magnitude': 1.82, 'constellation': '大犬座'}, {'name': '軍市一', 'magnitude': 1.99, 'constellation': '大犬座'}, {'name': '弧矢二', 'magnitude': 2.45, 'constellation': '大犬座'}, {'name': '老人星', 'magnitude': -0.74, 'constellation': '船底座'}, {'name': '南船五', 'magnitude': 1.69, 'constellation': '船底座'}, {'name': '海石一', 'magnitude': 1.86, 'constellation': '船底座'}, {'name': '海石二', 'magnitude': 2.21, 'constellation': '船底座'}, {'name': '南船三', 'magnitude': 2.76, 'constellation': '船底座'}, {'name': '海石五', 'magnitude': 2.97, 'constellation': '船底座'}, {'name': '南門二', 'magnitude': -0.27, 'constellation': '半人馬座'}, {'name': '馬腹一', 'magnitude': 0.61, 'constellation': '半人馬座'}, {'name': '庫樓三', 'magnitude': 2.06, 'constellation': '半人馬座'}, {'name': '庫樓七', 'magnitude': 2.17, 'constellation': '半人馬座'}, {'name': '南門一', 'magnitude': 2.3, 'constellation': '半人馬座'}, {'name': '庫樓二', 'magnitude': 2.35, 'constellation': '半人馬座'}, {'name': '庫樓一', 'magnitude': 2.55, 'constellation': '半人馬座'}, {'name': '馬尾三', 'magnitude': 2.57, 'constellation': '半人馬座'}, {'name': '柱十一', 'magnitude': 2.73, 'constellation': '半人馬座'}, {'name': '大角星', 'magnitude': -0.05, 'constellation': '牧夫座'}, {'name': '梗河一', 'magnitude': 2.37, 'constellation': '牧夫座'}, {'name': '右攝提一', 'magnitude': 2.68, 'constellation': '牧夫座'}, {'name': '織女一', 'magnitude': 0.03, 'constellation': '天琴座'}, {'name': '五車二', 'magnitude': 0.08, 'constellation': '御夫座'}, {'name': '五車五', 'magnitude': 1.65, 'constellation': '御夫座/金牛座'}, {'name': '五車三', 'magnitude': 1.9, 'constellation': '御夫座'}, {'name': '五車四', 'magnitude': 2.62, 'constellation': '御夫座'}, {'name': '五車一', 'magnitude': 2.69, 'constellation': '御夫座'}, {'name': '柱一', 'magnitude': 2.98, 'constellation': '御夫座'}, {'name': '參宿七', 'magnitude': 0.13, 'constellation': '獵戶座'}, {'name': '參宿四', 'magnitude': 0.42, 'constellation': '獵戶座'}, {'name': '參宿五', 'magnitude': 1.64, 'constellation': '獵戶座'}, {'name': '參宿二', 'magnitude': 1.69, 'constellation': '獵戶座'}, {'name': '參宿一', 'magnitude': 1.77, 'constellation': '獵戶座'}, {'name': '參宿六', 'magnitude': 2.09, 'constellation': '獵戶座'}, {'name': '參宿三', 'magnitude': 2.23, 'constellation': '獵戶座'}, {'name': '伐三', 'magnitude': 2.77, 'constellation': '獵戶座'}, {'name': '南河三', 'magnitude': 0.34, 'constellation': '小犬座'}, {'name': '南河二', 'magnitude': 2.89, 'constellation': '小犬座'}, {'name': '水尾一', 'magnitude': 0.46, 'constellation': '波江座'}, {'name': '玉井三', 'magnitude': 2.8, 'constellation': '波江座'}, {'name': '天園六', 'magnitude': 2.88, 'constellation': '波江座'}, {'name': '天苑一', 'magnitude': 2.95, 'constellation': '波江座'}, {'name': '河鼓二', 'magnitude': 0.76, 'constellation': '天鷹座'}, {'name': '河鼓三', 'magnitude': 2.71, 'constellation': '天鷹座'}, {'name': '吳越', 'magnitude': 2.98, 'constellation': '天鷹座'}, {'name': '河鼓一', 'magnitude': 3.71, 'constellation': '天鷹座'}, {'name': '十字架二', 'magnitude': 0.77, 'constellation': '南十字座'}, {'name': '十字架三', 'magnitude': 1.25, 'constellation': '南十字座'}, {'name': '十字架一', 'magnitude': 1.64, 'constellation': '南十字座'}, {'name': '十字架四', 'magnitude': 2.79, 'constellation': '南十字座'}, {'name': '畢宿五', 'magnitude': 0.86, 'constellation': '金牛座'}, {'name': '昴宿六', 'magnitude': 2.87, 'constellation': '金牛座'}, {'name': '天關', 'magnitude': 3.01, 'constellation': '金牛座'}, {'name': '心宿二', 'magnitude': 0.96, 'constellation': '天蠍座'}, {'name': '尾宿八', 'magnitude': 1.62, 'constellation': '天蠍座'}, {'name': '尾宿五', 'magnitude': 1.84, 'constellation': '天蠍座'}, {'name': '房宿三', 'magnitude': 2.31, 'constellation': '天蠍座'}, {'name': '尾宿二', 'magnitude': 2.31, 'constellation': '天蠍座'}, {'name': '尾宿七', 'magnitude': 2.39, 'constellation': '天蠍座'}, {'name': '房宿四', 'magnitude': 2.5, 'constellation': '天蠍座'}, {'name': '尾宿九', 'magnitude': 2.7, 'constellation': '天蠍座'}, {'name': '心宿三', 'magnitude': 2.82, 'constellation': '天蠍座'}, {'name': '心宿一', 'magnitude': 2.88, 'constellation': '天蠍座'}, {'name': '房宿一', 'magnitude': 2.89, 'constellation': '天蠍座'}, {'name': '角宿一', 'magnitude': 0.97, 'constellation': '室女座'}, {'name': '東上相', 'magnitude': 2.74, 'constellation': '室女座'}, {'name': '東次將', 'magnitude': 2.83, 'constellation': '室女座'}, {'name': '北河三', 'magnitude': 1.14, 'constellation': '雙子座'}, {'name': '北河二', 'magnitude': 1.58, 'constellation': '雙子座'}, {'name': '井宿三', 'magnitude': 1.92, 'constellation': '雙子座'}, {'name': '井宿一', 'magnitude': 2.86, 'constellation': '雙子座'}, {'name': '北落師門', 'magnitude': 1.16, 'constellation': '南魚座'}, {'name': '天津四', 'magnitude': 1.25, 'constellation': '天鵝座'}, {'name': '天津一', 'magnitude': 2.23, 'constellation': '天鵝座'}, {'name': '天津九', 'magnitude': 2.48, 'constellation': '天鵝座'}, {'name': '天津二', 'magnitude': 2.87, 'constellation': '天鵝座'}, {'name': '輦道增七', 'magnitude': 3.05, 'constellation': '天鵝座'}, {'name': '軒轅十四', 'magnitude': 1.39, 'constellation': '獅子座'}, {'name': '軒轅十二', 'magnitude': 2.08, 'constellation': '獅子座'}, {'name': '五帝座一', 'magnitude': 2.11, 'constellation': '獅子座'}, {'name': '西上相', 'magnitude': 2.56, 'constellation': '獅子座'}, {'name': '軒轅九', 'magnitude': 2.98, 'constellation': '獅子座'}, {'name': '鶴一', 'magnitude': 1.74, 'constellation': '天鶴座'}, {'name': '鶴二', 'magnitude': 2.15, 'constellation': '天鶴座'}, {'name': '玉衡', 'magnitude': 1.77, 'constellation': '大熊座'}, {'name': '天樞', 'magnitude': 1.79, 'constellation': '大熊座'}, {'name': '搖光', 'magnitude': 1.86, 'constellation': '大熊座'}, {'name': '開陽', 'magnitude': 2.27, 'constellation': '大熊座'}, {'name': '天璇', 'magnitude': 2.37, 'constellation': '大熊座'}, {'name': '天璣', 'magnitude': 2.44, 'constellation': '大熊座'}, {'name': '天權', 'magnitude': 3.31, 'constellation': '大熊座'}, {'name': '天船三', 'magnitude': 1.81, 'constellation': '英仙座'}, {'name': '大陵五', 'magnitude': 2.12, 'constellation': '英仙座'}, {'name': '捲舌四', 'magnitude': 2.86, 'constellation': '英仙座'}, {'name': '捲舌二', 'magnitude': 2.88, 'constellation': '英仙座'}, {'name': '天船二', 'magnitude': 2.93, 'constellation': '英仙座'}, {'name': '天社一', 'magnitude': 1.83, 'constellation': '船帆座'}, {'name': '天記', 'magnitude': 2.21, 'constellation': '船帆座'}, {'name': '天社三', 'magnitude': 1.96, 'constellation': '船帆座'}, {'name': '天社五', 'magnitude': 2.48, 'constellation': '船帆座'}, {'name': '海山增二', 'magnitude': 2.69, 'constellation': '船帆座'}, {'name': '箕宿三', 'magnitude': 1.85, 'constellation': '人馬座'}, {'name': '斗宿四', 'magnitude': 2.05, 'constellation': '人馬座'}, {'name': '斗宿六', 'magnitude': 2.59, 'constellation': '人馬座'}, {'name': '箕宿二', 'magnitude': 2.7, 'constellation': '人馬座'}, {'name': '斗宿二', 'magnitude': 2.82, 'constellation': '人馬座'}, {'name': '建三', 'magnitude': 2.89, 'constellation': '人馬座'}, {'name': '箕宿一', 'magnitude': 2.98, 'constellation': '人馬座'}, {'name': '三角形三', 'magnitude': 1.91, 'constellation': '南三角座'}, {'name': '三角形二', 'magnitude': 2.85, 'constellation': '南三角座'}, {'name': '三角形一', 'magnitude': 2.87, 'constellation': '南三角座'}, {'name': '勾陳一', 'magnitude': 1.98, 'constellation': '小熊座'}, {'name': '帝', 'magnitude': 2.08, 'constellation': '小熊座'}, {'name': '太子', 'magnitude': 3.05, 'constellation': '小熊座'}, {'name': '星宿一', 'magnitude': 2.0, 'constellation': '長蛇座'}, {'name': '平一', 'magnitude': 2.99, 'constellation': '長蛇座'}, {'name': '婁宿三', 'magnitude': 2.0, 'constellation': '白羊座'}, {'name': '婁宿一', 'magnitude': 2.66, 'constellation': '白羊座'}, {'name': '土司空', 'magnitude': 2.02, 'constellation': '鯨魚座'}, {'name': '天囷一', 'magnitude': 2.53, 'constellation': '鯨魚座'}, {'name': '奎宿九', 'magnitude': 2.05, 'constellation': '仙女座'}, {'name': '壁宿二', 'magnitude': 2.06, 'constellation': '仙女座'}, {'name': '天大將軍一', 'magnitude': 2.14, 'constellation': '仙女座'}, {'name': '壁宿二', 'magnitude': 2.06, 'constellation': '飛馬座'}, {'name': '危宿三', 'magnitude': 2.4, 'constellation': '飛馬座'}, {'name': '室宿二', 'magnitude': 2.42, 'constellation': '飛馬座'}, {'name': '室宿一', 'magnitude': 2.48, 'constellation': '飛馬座'}, {'name': '壁宿一', 'magnitude': 2.84, 'constellation': '飛馬座'}, {'name': '離宮四', 'magnitude': 2.95, 'constellation': '飛馬座'}, {'name': '侯', 'magnitude': 2.07, 'constellation': '蛇夫座'}, {'name': '宋/天市左垣十一', 'magnitude': 2.43, 'constellation': '蛇夫座'}, {'name': '韓', 'magnitude': 2.57, 'constellation': '蛇夫座'}, {'name': '宗正一', 'magnitude': 2.75, 'constellation': '蛇夫座'}, {'name': '梁', 'magnitude': 2.75, 'constellation': '蛇夫座'}, {'name': '貫索四', 'magnitude': 2.23, 'constellation': '北冕座'}, {'name': '天棓四', 'magnitude': 2.23, 'constellation': '天龍座'}, {'name': '少宰', 'magnitude': 2.73, 'constellation': '天龍座'}, {'name': '天棓三', 'magnitude': 2.79, 'constellation': '天龍座'}, {'name': '王良四', 'magnitude': 2.24, 'constellation': '仙后座'}, {'name': '王良一', 'magnitude': 2.28, 'constellation': '仙后座'}, {'name': '策', 'magnitude': 2.47, 'constellation': '仙后座'}, {'name': '閣道三', 'magnitude': 2.68, 'constellation': '仙后座'}, {'name': '閣道二', 'magnitude': 3.37, 'constellation': '仙后座'}, {'name': '弧矢增二十二', 'magnitude': 2.25, 'constellation': '船尾座'}, {'name': '弧矢九', 'magnitude': 2.73, 'constellation': '船尾座'}, {'name': '弧矢增三十三', 'magnitude': 2.78, 'constellation': '船尾座'}, {'name': '老人增一', 'magnitude': 2.95, 'constellation': '船尾座'}, {'name': '騎官十', 'magnitude': 2.3, 'constellation': '豺狼座'}, {'name': '騎官四', 'magnitude': 2.68, 'constellation': '豺狼座'}, {'name': '騎官一', 'magnitude': 2.77, 'constellation': '豺狼座'}, {'name': '火鳥六', 'magnitude': 2.38, 'constellation': '鳳凰座'}, {'name': '天鉤五', 'magnitude': 2.51, 'constellation': '仙王座'}, {'name': '軫宿一', 'magnitude': 2.59, 'constellation': '烏鴉座'}, {'name': '軫宿四', 'magnitude': 2.65, 'constellation': '烏鴉座'}, {'name': '軫宿三', 'magnitude': 2.96, 'constellation': '烏鴉座'}, {'name': '軫宿二', 'magnitude': 3.02, 'constellation': '烏鴉座'}, {'name': '廁一', 'magnitude': 2.59, 'constellation': '天兔座'}, {'name': '廁二', 'magnitude': 2.84, 'constellation': '天兔座'}, {'name': '氐宿四', 'magnitude': 2.61, 'constellation': '天秤座'}, {'name': '低宿一', 'magnitude': 2.74, 'constellation': '天秤座'}, {'name': '蜀', 'magnitude': 2.62, 'constellation': '巨蛇座'}, {'name': '丈人一', 'magnitude': 2.65, 'constellation': '天鴿座'}, {'name': '河中 (beta)', 'magnitude': 2.81, 'constellation': '武仙座'}, {'name': '天紀二', 'magnitude': 2.81, 'constellation': '武仙座'}, {'name': '帝座', 'magnitude': 2.91, 'constellation': '武仙座'}, {'name': '壘壁陣四', 'magnitude': 2.81, 'constellation': '摩羯座'}, {'name': '虛宿一', 'magnitude': 2.87, 'constellation': '寶瓶座'}, {'name': '危宿一', 'magnitude': 2.94, 'constellation': '寶瓶座'}, {'name': '常陳一', 'magnitude': 2.91, 'constellation': '獵犬座'}];
 
         const constellationOrder = [
             "白羊座", "金牛座", "雙子座", "巨蟹座", "獅子座", "室女座",
@@ -90,20 +62,24 @@
         window.onload = function() {
             loadFromLocalStorage();
             updateTable();
+            updateCurrentDraw([]);
         };
 
         function drawStars() {
             const numStars = parseInt(document.getElementById('numStars').value);
             const availableStars = allStars.filter(star => !drawnStars.some(drawnStar => drawnStar.name === star.name));
+            const newlyDrawnStars = [];
 
             for (let i = 0; i < numStars && availableStars.length > 0; i++) {
                 const randomIndex = Math.floor(Math.random() * availableStars.length);
                 const drawnStar = availableStars.splice(randomIndex, 1)[0];
                 drawnStars.push(drawnStar);
+                newlyDrawnStars.push(drawnStar);
             }
 
             updateTable();
             saveToLocalStorage();
+            updateCurrentDraw(newlyDrawnStars);
         }
 
         function updateTable() {
@@ -146,6 +122,22 @@
             result.innerHTML = tableHTML;
         }
 
+        function updateCurrentDraw(newStars) {
+            const currentDraw = document.getElementById('currentDraw');
+            if (newStars.length === 0) {
+                currentDraw.innerHTML = '';
+                return;
+            }
+            
+            let drawHTML = '<h3>Current Draw:</h3><ul>';
+            newStars.forEach(star => {
+                drawHTML += `<li>${star.name} (${star.constellation}) - Magnitude: ${star.magnitude}</li>`;
+            });
+            drawHTML += '</ul>';
+            
+            currentDraw.innerHTML = drawHTML;
+        }
+
         function saveToLocalStorage() {
             localStorage.setItem('drawnStars', JSON.stringify(drawnStars));
         }
@@ -161,6 +153,7 @@
             localStorage.removeItem('drawnStars');
             drawnStars = [];
             updateTable();
+            updateCurrentDraw([]);
         }
     </script>
 </body>
