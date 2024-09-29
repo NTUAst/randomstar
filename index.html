@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Star Draw</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 20px 0;
+        }
+        #result, #listSummary {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Star Draw</h1>
+    <div>
+        <label for="listNum">List number (1-8):</label>
+        <input type="number" id="listNum" min="1" max="8" value="1">
+    </div>
+    <div>
+        <label for="numStars">Number of stars to draw:</label>
+        <input type="number" id="numStars" min="1" value="1">
+    </div>
+    <button onclick="drawStars()">Draw Stars</button>
+    <div id="listSummary"></div>
+    <div id="result"></div>
+
+    <script>
+        const starLists = [
+            [
+                {name: "天狼星", magnitude: -1.46, constellation: "大犬座"},
+                {name: "弧矢七", magnitude: 1.5, constellation: "大犬座"},
+                {name: "弧矢一", magnitude: 1.82, constellation: "大犬座"},
+                {name: "軍市一", magnitude: 1.99, constellation: "大犬座"},
+                {name: "弧矢二", magnitude: 2.45, constellation: "大犬座"}
+            ],
+            [
+                {name: "老人星", magnitude: -0.74, constellation: "船底座"},
+                {name: "南船五", magnitude: 1.69, constellation: "船底座"},
+                {name: "海石一", magnitude: 1.86, constellation: "船底座"},
+                {name: "海石二", magnitude: 2.21, constellation: "船底座"},
+                {name: "南船三", magnitude: 2.76, constellation: "船底座"}
+            ],
+            [
+                {name: "南門二", magnitude: -0.27, constellation: "半人馬座"},
+                {name: "馬腹一", magnitude: 0.61, constellation: "半人馬座"},
+                {name: "庫樓三", magnitude: 2.06, constellation: "半人馬座"},
+                {name: "庫樓七", magnitude: 2.17, constellation: "半人馬座"},
+                {name: "南門一", magnitude: 2.3, constellation: "半人馬座"}
+            ],
+            [
+                {name: "大角星", magnitude: -0.05, constellation: "牧夫座"},
+                {name: "梗河一", magnitude: 2.37, constellation: "牧夫座"},
+                {name: "右攝提一", magnitude: 2.68, constellation: "牧夫座"}
+            ],
+            [
+                {name: "織女一", magnitude: 0.03, constellation: "天琴座"},
+                {name: "五車二", magnitude: 0.08, constellation: "御夫座"},
+                {name: "五車五", magnitude: 1.65, constellation: "御夫座/金牛座"}
+            ],
+            [
+                {name: "參宿七", magnitude: 0.13, constellation: "獵戶座"},
+                {name: "參宿四", magnitude: 0.42, constellation: "獵戶座"},
+                {name: "參宿五", magnitude: 1.64, constellation: "獵戶座"}
+            ],
+            [
+                {name: "南河三", magnitude: 0.34, constellation: "小犬座"},
+                {name: "南河二", magnitude: 2.89, constellation: "小犬座"}
+            ],
+            [
+                {name: "水尾一", magnitude: 0.46, constellation: "波江座"},
+                {name: "玉井三", magnitude: 2.8, constellation: "波江座"},
+                {name: "天園六", magnitude: 2.88, constellation: "波江座"}
+            ]
+        ];
+
+        let drawnStars = [];
+        let listDrawCounts = Array(8).fill(0);
+        let listDrawNames = Array(8).fill().map(() => []);
+
+        function drawStars() {
+            const listNum = parseInt(document.getElementById('listNum').value) - 1;
+            const numStars = parseInt(document.getElementById('numStars').value);
+            const stars = starLists[listNum];
+
+            for (let i = 0; i < numStars; i++) {
+                const randomIndex = Math.floor(Math.random() * stars.length);
+                const drawnStar = stars[randomIndex];
+                drawnStars.push(drawnStar);
+                listDrawNames[listNum].push(drawnStar.name);
+            }
+
+            listDrawCounts[listNum] += numStars;
+            updateTable();
+            updateListSummary();
+        }
+
+        function updateTable() {
+            const result = document.getElementById('result');
+            let tableHTML = `
+                <table>
+                    <tr>
+                        <th>Star Name</th>
+                        <th>Magnitude</th>
+                        <th>Constellation</th>
+                    </tr>
+            `;
+
+            drawnStars.forEach(star => {
+                tableHTML += `
+                    <tr>
+                        <td>${star.name}</td>
+                        <td>${star.magnitude}</td>
+                        <td>${star.constellation}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</table>';
+            result.innerHTML = tableHTML;
+        }
+
+        function updateListSummary() {
+            const listSummary = document.getElementById('listSummary');
+            let summaryHTML = `
+                <table>
+                    <tr>
+                        <th>List Number</th>
+                        <th>Stars Drawn</th>
+                        <th>Star Names</th>
+                    </tr>
+            `;
+
+            listDrawCounts.forEach((count, index) => {
+                summaryHTML += `
+                    <tr>
+                        <td>List ${index + 1}</td>
+                        <td>${count}</td>
+                        <td>${listDrawNames[index].join(", ")}</td>
+                    </tr>
+                `;
+            });
+
+            summaryHTML += '</table>';
+            listSummary.innerHTML = summaryHTML;
+        }
+    </script>
+</body>
+</html>
