@@ -1,17 +1,184 @@
-import pandas as pd
+def parse_string(input_str):
+    # Split the input string by the dashes ('-')
+    parts = input_str.split('---')
 
-# Load the CSV file
-file_path = 'star.csv'
-star_data = pd.read_csv(file_path)
+    # Further split the first part into season and constellation
+    season_constellation = parts[0].split('-')
 
-# Filter out rows where 'magnitude' column is not numeric
-star_data = star_data[pd.to_numeric(star_data["magnitude"], errors='coerce').notnull()]
+    # Assign values based on the split parts
+    season = season_constellation[0]  # e.g., "春"
+    constellation = season_constellation[1]  # e.g., "獅子座Leo"
+    name = parts[1]  # e.g., "軒轅九"
 
-# Convert each row to a dictionary with specified keys and ensure 'magnitude' is a float
-star_list = [
-    {"name": row["name"], "magnitude": float(row["magnitude"]), "constellation": row["constellation"]}
-    for _, row in star_data.iterrows()
+    # Create the dictionary with the extracted values
+    result = {
+       constellation
+    }
+
+    return result
+
+# Test the function with an example input
+
+input_strings = [
+    "春-獅子座Leo---軒轅九",
+    "春-獅子座Leo---軒轅十二",
+    "春-獅子座Leo---軒轅十四",
+    "春-獅子座Leo---五帝座一",
+    "春-獅子座Leo---西上相",
+    "春-室女座Virgo---角宿一",
+    "春-室女座Virgo---東上相",
+    "春-室女座Virgo---東次將",
+    "春-牧夫座Bootes---大角星",
+    "春-牧夫座Bootes---梗河一",
+    "春-牧夫座Bootes---右攝提一",
+    "春-大熊座Ursa Major---天樞",
+    "春-大熊座Ursa Major---天璇",
+    "春-大熊座Ursa Major---天璣",
+    "春-大熊座Ursa Major---天權",
+    "春-大熊座Ursa Major---玉衡",
+    "春-大熊座Ursa Major---開陽",
+    "春-大熊座Ursa Major---搖光",
+    "春-小熊座Ursa Minor---勾陳一",
+    "春-小熊座Ursa Minor---帝",
+    "春-小熊座Ursa Minor---太子",
+    "春-長蛇座Hydra---星宿一",
+    "春-長蛇座Hydra---平一",
+    "春-烏鴉座Corvus---軫宿一",
+    "春-烏鴉座Corvus---軫宿二",
+    "春-烏鴉座Corvus---軫宿三",
+    "春-烏鴉座Corvus---軫宿四",
+    "春-天龍座Draco---天棓四",
+    "春-天龍座Draco---少宰",
+    "春-天龍座Draco---天棓三",
+    "春-北冕座Corona Borealis---貫索四",
+    "春-南十字座Crux---十字架一",
+    "春-南十字座Crux---十字架二",
+    "春-南十字座Crux---十字架三",
+    "春-南十字座Crux---十字架四",
+    "春-半人馬座Centaurus---南門一",
+    "春-半人馬座Centaurus---南門二",
+    "春-半人馬座Centaurus---馬腹一",
+    "春-半人馬座Centaurus---庫樓二",
+    "春-半人馬座Centaurus---庫樓三",
+    "春-半人馬座Centaurus---庫樓七",
+    "夏-天秤座Libra---氐宿一",
+    "夏-天秤座Libra---氐宿四",
+    "夏-天蠍座Scorpius---心宿二",
+    "夏-天蠍座Scorpius---房宿三",
+    "夏-天蠍座Scorpius---房宿四",
+    "夏-天蠍座Scorpius---尾宿二",
+    "夏-天蠍座Scorpius---尾宿五",
+    "夏-天蠍座Scorpius---尾宿七",
+    "夏-天蠍座Scorpius---尾宿八",
+    "夏-人馬座Sagittarius---箕宿一",
+    "夏-人馬座Sagittarius---箕宿二",
+    "夏-人馬座Sagittarius---箕宿三",
+    "夏-人馬座Sagittarius---斗宿二",
+    "夏-人馬座Sagittarius---斗宿四",
+    "夏-人馬座Sagittarius---斗宿六",
+    "夏-人馬座Sagittarius---建三",
+    "夏-摩羯座Capricorn---壘壁陣四",
+    "夏-蛇夫座Ophiuchus---侯",
+    "夏-蛇夫座Ophiuchus---宋/天市左垣十一",
+    "夏-蛇夫座Ophiuchus---韓",
+    "夏-蛇夫座Ophiuchus---宗正一",
+    "夏-蛇夫座Ophiuchus---梁",
+    "夏-天琴座Lyra---織女一",
+    "夏-天鷹座Aquila---河鼓一",
+    "夏-天鷹座Aquila---河鼓二",
+    "夏-天鷹座Aquila---河鼓三",
+    "夏-天鷹座Aquila---吳越",
+    "夏-天鵝座Cygnus---天津一",
+    "夏-天鵝座Cygnus---天津二",
+    "夏-天鵝座Cygnus---天津四",
+    "夏-天鵝座Cygnus---天津九",
+    "夏-天鵝座Cygnus---輦道增七",
+    "夏-武仙座Hercules---河中(beta)",
+    "夏-武仙座Hercules---天紀二",
+    "夏-武仙座Hercules---帝座",
+    "秋-寶瓶座Aquarius---虛宿一",
+    "秋-寶瓶座Aquarius---危宿一",
+    "秋-雙魚座Pisces---雙魚座",
+    "秋-白羊座Aries---婁宿三",
+    "秋-白羊座Aries---婁宿一",
+    "秋-英仙座Perseus---大陵五",
+    "秋-英仙座Perseus---天船二",
+    "秋-英仙座Perseus---天船三",
+    "秋-英仙座Perseus---捲舌二",
+    "秋-英仙座Perseus---捲舌四",
+    "秋-仙女座Andromeda---奎宿九",
+    "秋-仙女座Andromeda---壁宿二",
+    "秋-仙女座Andromeda---天大將軍一",
+    "秋-仙后座Cassiopeia---王良一",
+    "秋-仙后座Cassiopeia---王良四",
+    "秋-仙后座Cassiopeia---策",
+    "秋-仙后座Cassiopeia---閣道二",
+    "秋-仙后座Cassiopeia---閣道三",
+    "秋-仙王座Cepheus---天鉤五",
+    "秋-飛馬座Pegasus---壁宿一",
+    "秋-飛馬座Pegasus---壁宿二",
+    "秋-飛馬座Pegasus---室宿一",
+    "秋-飛馬座Pegasus---室宿二",
+    "秋-飛馬座Pegasus---危宿三",
+    "秋-飛馬座Pegasus---離宮四",
+    "秋-鯨魚座Cetus---土司空",
+    "秋-鯨魚座Cetus---天囷一",
+    "秋-南魚座Piscis Austrinus---北落師門",
+    "秋-天鶴座Grus---鶴一",
+    "秋-天鶴座Grus---鶴二",
+    "秋-鳳凰座Phoenix---火鳥六",
+    "冬-金牛座Taurus---畢宿五",
+    "冬-金牛座Taurus---五車五",
+    "冬-金牛座Taurus---天關",
+    "冬-金牛座Taurus---昴宿星團",
+    "冬-雙子座Gemini---北河二",
+    "冬-雙子座Gemini---北河三",
+    "冬-雙子座Gemini---井宿一",
+    "冬-雙子座Gemini---井宿三",
+    "冬-巨蟹座Cancer---巨蟹座",
+    "冬-獵戶座Orion---參宿一",
+    "冬-獵戶座Orion---參宿二",
+    "冬-獵戶座Orion---參宿三",
+    "冬-獵戶座Orion---參宿四",
+    "冬-獵戶座Orion---參宿五",
+    "冬-獵戶座Orion---參宿六",
+    "冬-獵戶座Orion---參宿七",
+    "冬-獵戶座Orion---伐三",
+    "冬-御夫座Auriga---五車一",
+    "冬-御夫座Auriga---五車二",
+    "冬-御夫座Auriga---五車三",
+    "冬-御夫座Auriga---五車四",
+    "冬-御夫座Auriga---五車五",
+    "冬-御夫座Auriga---柱一",
+    "冬-大犬座Canis Major---天狼星",
+    "冬-大犬座Canis Major---弧矢一",
+    "冬-大犬座Canis Major---弧矢二",
+    "冬-大犬座Canis Major---弧矢七",
+    "冬-大犬座Canis Major---軍市一",
+    "冬-小犬座Canis Minor---南河二",
+    "冬-小犬座Canis Minor---南河三",
+    "冬-船底座Carina---老人星",
+    "冬-船底座Carina---南船五",
+    "冬-船底座Carina---海石一",
+    "冬-船底座Carina---海石二",
+    "冬-船尾座Puppis---弧矢九",
+    "冬-船尾座Puppis---弧矢增二十二",
+    "冬-船尾座Puppis---弧矢增三十三",
+    "冬-波江座Eridanus---水尾一",
+    "冬-波江座Eridanus---玉井三",
+    "冬-波江座Eridanus---天園六",
+    "冬-波江座Eridanus---天苑一",
+    "冬-天兔座Lepus---廁一",
+    "冬-天兔座Lepus---廁二",
+    "太陽",
+    "金星",
+    "火星",
+    "木星",
+    "土星",
+    "月球"
 ]
 
-# Output the result
-print(star_list)  # Display the first 5 entries
+# Parse each input string and print the result
+for input_str in input_strings:
+    output = parse_string(input_str)
+    print(output)
