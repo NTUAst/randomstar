@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +43,7 @@
         <input type="number" id="numStars" min="1" value="1">
     </div>
     <button onclick="drawStars()">Draw Stars</button>
+    <button onclick="undoLastDraw()">Undo Last Draw</button>
     <button onclick="clearAllData()">Clear All Data</button>
     <div id="currentDraw"></div>
     <div id="result"></div>
@@ -205,10 +207,10 @@
             '夏－蛇夫座Ophiuchus', '夏－天琴座Lyra', '夏－天鷹座Aquila', '夏－天鵝座Cygnus', '夏－武仙座Hercules', '秋－寶瓶座Aquarius', '秋－雙魚座Pisces', '秋－白羊座Aries',
             '秋－英仙座Perseus', '秋－仙女座Andromeda', '秋－仙后座Cassiopeia', '秋－仙王座Cepheus', '秋－飛馬座Pegasus', '秋－鯨魚座Cetus', '秋－南魚座Piscis Austrinus',
             '秋－天鶴座Grus', '秋－鳳凰座Phoenix', '冬－金牛座Taurus', '冬－雙子座Gemini', '冬－巨蟹座Cancer', '冬－獵戶座Orion', '冬－御夫座Auriga', '冬－大犬座Canis Major',
-            '冬－小犬座Canis Minor', '冬－船底座Carina', '冬－船尾座Puppis', '冬－波江座Eridanus', '冬－天兔座Lepus'
-        ];
+            '冬－小犬座Canis Minor', '冬－船底座Carina', '冬－船尾座Puppis', '冬－波江座Eridanus', '冬－天兔座Lepus'];
 
         let drawnStars = [];
+        let lastDrawCount = 0;
 
         window.onload = function() {
             loadFromLocalStorage();
@@ -228,9 +230,22 @@
                 newlyDrawnStars.push(drawnStar);
             }
 
+            lastDrawCount = newlyDrawnStars.length;
             updateTable();
             saveToLocalStorage();
             updateCurrentDraw(newlyDrawnStars);
+        }
+
+        function undoLastDraw() {
+            if (lastDrawCount > 0) {
+                drawnStars = drawnStars.slice(0, -lastDrawCount);
+                updateTable();
+                saveToLocalStorage();
+                updateCurrentDraw([]);
+                lastDrawCount = 0;
+            } else {
+                alert("No recent draw to undo.");
+            }
         }
 
         function updateTable() {
@@ -280,7 +295,7 @@
             
             let drawHTML = '<h3>Current Draw:</h3><ul>';
             newStars.forEach(star => {
-                drawHTML += `<li>${star.name} (${star.constellation}) </li>`;
+                drawHTML += `<li>${star.name} (${star.constellation})</li>`;
             });
             drawHTML += '</ul>';
             
@@ -289,6 +304,7 @@
 
         function saveToLocalStorage() {
             localStorage.setItem('drawnStars', JSON.stringify(drawnStars));
+            localStorage.setItem('lastDrawCount', lastDrawCount);
         }
 
         function loadFromLocalStorage() {
@@ -296,15 +312,20 @@
             if (savedDrawnStars) {
                 drawnStars = JSON.parse(savedDrawnStars);
             }
+            const savedLastDrawCount = localStorage.getItem('lastDrawCount');
+            if (savedLastDrawCount) {
+                lastDrawCount = parseInt(savedLastDrawCount);
+            }
         }
 
         function clearAllData() {
             localStorage.removeItem('drawnStars');
+            localStorage.removeItem('lastDrawCount');
             drawnStars = [];
+            lastDrawCount = 0;
             updateTable();
             updateCurrentDraw([]);
         }
     </script>
 </body>
 </html>
-       
